@@ -111,6 +111,3 @@ def bfs():
         "Visited states": len(visisted),
     }
     return (None, None, metrics)
-
-
-    

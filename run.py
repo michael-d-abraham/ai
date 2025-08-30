@@ -1,25 +1,13 @@
-#argparse entry point
-
-# reads your command=line arguments (--domain wfx --algo bfs)
-# loads the right domain 
-# calls the right algortith from seatch_core.py
-# Prints out rsults
-
-
-
 import search_core
 
 def pretty_print_solution(path_states, path_actions):
     if path_states is None:
         print("No solution found.")
         return
-
     print("Solution path (state -> action):")
     for i, s in enumerate(path_states):
-        if i < len(path_actions):
-            print(f"  {i:02d}: {s}  --{path_actions[i]}-->")
-        else:
-            print(f"  {i:02d}: {s}")
+        arrow = f"  --{path_actions[i]}-->" if i < len(path_actions) else ""
+        print(f"  {i:02d}: {s}{arrow}")
     print()
 
 def pretty_print_metrics(metrics):
@@ -28,15 +16,18 @@ def pretty_print_metrics(metrics):
         print(f"{k}: {v}")
 
 def main():
-    # Run BFS
-    path_states, path_actions, metrics = search_core.bfs()
-
-    # --- Print header ---
+    # BFS
     print("=== Breadth-First Search (BFS) Results ===\n")
+    bs, ba, bm = search_core.bfs()
+    pretty_print_solution(bs, ba)
+    pretty_print_metrics(bm)
+    print("\n")
 
-    # Print solution and metrics
-    pretty_print_solution(path_states, path_actions)
-    pretty_print_metrics(metrics)
+    # IDS
+    print("=== Iterative Deepening Search (IDS) Results ===\n")
+    is_, ia, im = search_core.ids()
+    pretty_print_solution(is_, ia)
+    pretty_print_metrics(im)
 
 if __name__ == "__main__":
     main()
