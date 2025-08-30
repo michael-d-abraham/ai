@@ -12,7 +12,6 @@
 
 # It’s the “content” or “world” that the search algorithm explores.
 
-from collections import deque
 
 def actions(state):
     F,W,G,C = state
@@ -52,7 +51,4 @@ def valid(s):
     return True 
     
 
-
-start_state = (0,0,0,0)
-goal_state = (1,1,1,1)
 

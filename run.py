@@ -2,32 +2,43 @@ import search_core
 
 def pretty_print_solution(path_states, path_actions):
     if path_states is None:
-        print("No solution found.")
+        print("No solution found.\n")
         return
-    print("Solution path (state -> action):")
+    print("Path:")
     for i, s in enumerate(path_states):
-        arrow = f"  --{path_actions[i]}-->" if i < len(path_actions) else ""
-        print(f"  {i:02d}: {s}{arrow}")
+        if i < len(path_actions):
+            print(f"  {i+1}) {path_actions[i]}   {s} -> {path_states[i+1]}")
+        else:
+            print(f"  {i+1}) {s}")
     print()
 
-def pretty_print_metrics(metrics):
-    print("=== Run Metrics ===")
-    for k, v in metrics.items():
-        print(f"{k}: {v}")
+def print_summary(domain, algo, metrics):
+    print(f"Domain: {domain} | Algorithm: {algo}")
+    print(f"Solution cost: {metrics['Solution cost']} | Depth: {metrics['Solution depth']}")
+    print(f"Nodes generated: {metrics['Nodes generated']} | Nodes expanded: {metrics['Nodes expanded']} | Max frontier: {metrics['Maximum frontier size']}\n")
 
-def main():
+def run_one_case(case_title, start_state, goal_state):
+    domain = "WGC"
+    print(f"=== {case_title} ===\n")
+
     # BFS
-    print("=== Breadth-First Search (BFS) Results ===\n")
-    bs, ba, bm = search_core.bfs()
+    bs, ba, bm = search_core.bfs(start_state, goal_state)
+    print_summary(domain, "BFS", bm)
     pretty_print_solution(bs, ba)
-    pretty_print_metrics(bm)
-    print("\n")
 
     # IDS
-    print("=== Iterative Deepening Search (IDS) Results ===\n")
-    is_, ia, im = search_core.ids()
+    is_, ia, im = search_core.ids(start_state, goal_state)
+    print_summary(domain, "IDS", im)
     pretty_print_solution(is_, ia)
-    pretty_print_metrics(im)
+
+def main():
+    # Case 1: Normal
+    run_one_case("Case 1 (Normal)", (0,0,0,0), (1,1,1,1))
+
+    # Case 2: variation (goat already on right)
+    run_one_case("Case 2 (goat starts on right)", (1,1,0,0), (1,1,1,1))
+
+
 
 if __name__ == "__main__":
     main()
