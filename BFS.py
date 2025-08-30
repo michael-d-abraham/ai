@@ -6,6 +6,7 @@
 # N = node in the graph or tree( node has state, action to get there, refrence to partent node)
 # Build tuple (state, action(to reach that state), parent node) Or just use a class (do the class makes it easier and mroe readable)
 
+
 # Using graph
 # Use an explored set data structure
 
@@ -35,9 +36,7 @@ graph = {
 start = "A"
 goal = "E"
 
-
-
-# init
+# init.                #init the frontier as an empty FIFO que
 q = deque([start])
 visisted = {start}
 parent = {start: None}
